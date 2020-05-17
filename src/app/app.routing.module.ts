@@ -5,10 +5,6 @@ import { PhotosListComponent } from './photos/photos-list/photos-list.component'
 import { PhotosFormComponent } from './photos/photos-form/photos-form.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { PhotoListResolver } from './photos/photos-list/photo-list.resolver';
-import { SignInComponent } from './home/signin/signin.component';
-import { AuthGuard } from './core/auth/auth.guard';
-import { SignUpComponent } from './home/signup/signup.component';
-import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
     {
@@ -18,19 +14,7 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        component: HomeComponent,
-        canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                component: SignInComponent,
-                canActivate: [AuthGuard]
-            },
-            {
-                path: 'signup',
-                component: SignUpComponent,
-            },
-        ]
+        loadChildren: './home/home.module#HomeModule'
     },
     {
         path: 'user/:userName',
