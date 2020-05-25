@@ -13,8 +13,10 @@ export class PhotosComponent implements OnChanges {
   rows: any[] = [];
   
   constructor() { }
-  
-  ngOnChanges(changes: SimpleChanges) {
+  /** no caso estava vindo vazio, o onChanges atribui um valor com o mesmo nomes da variavel
+   quando ocorre uma mudança, no caso, após ter sido recebido o photos da API, este método
+   é acionado */
+  ngOnChanges(changes: SimpleChanges) { // SimplesChanges, no plural
     if(changes.photos) 
       this.rows = this.groupColumns(this.photos);
   }

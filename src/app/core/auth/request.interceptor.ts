@@ -26,6 +26,8 @@ export class RequestInterceptor implements HttpInterceptor {
                     }
                 });
             }
+            // console.log('interceptado req: ', req);
+            // console.log('interceptado next: ', next);
             return next.handle(req);
     }
 }

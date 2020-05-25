@@ -5,7 +5,7 @@ import { Photo } from '../photo/photo';
 @Pipe({ name: 'filterByDescription'})
 export class FilterByDescription implements PipeTransform {
 
-    transform(photos: Photo[], descriptionQuery: string) {
+    transform(photos: Photo[], descriptionQuery: string) { // primeiro argumento é o elemento, segundo é o filter atrelado(DescriptionQuery)
         descriptionQuery = descriptionQuery
             .trim()
             .toLowerCase();
