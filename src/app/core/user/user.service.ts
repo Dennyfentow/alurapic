@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
+import jwt_decode from "jwt-decode";
 import { BehaviorSubject } from 'rxjs';
 import { User } from './user';
-import * as jtw_decode from 'jwt-decode';
 
-@Injectable({ providedIn: 'root'})
-export class UserService { 
+@Injectable({
+    providedIn: 'root'
+})
+export class UserService {
 
-    private userSubject = new BehaviorSubject<User>(null);
+    private userSubject = new BehaviorSubject<User>(null); // armazena a última emissão até que alguém apareça para consumi-la.
     private userName: string;
-
-    constructor(private tokenService: TokenService) { 
-
-        this.tokenService.hasToken() && 
-            this.decodeAndNotify();
+    constructor(private tokenService: TokenService) {
+        this.tokenService.hasToken() &&
+            this.decodeAndNotify()
     }
 
     setToken(token: string) {
@@ -22,12 +22,12 @@ export class UserService {
     }
 
     getUser() {
-        return this.userSubject.asObservable();
+        return this.userSubject.asObservable(); // o observável do Subject
     }
 
     private decodeAndNotify() {
         const token = this.tokenService.getToken();
-        const user = jtw_decode(token) as User;
+        const user = jwt_decode(token) as User; // <- (aqui a chamada jwt_decode)
         this.userName = user.name;
         this.userSubject.next(user);
     }
@@ -44,4 +44,5 @@ export class UserService {
     getUserName() {
         return this.userName;
     }
+
 }

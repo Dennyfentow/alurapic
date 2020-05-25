@@ -1,0 +1,6 @@
+<ap-search (onTyping)="filter = $event" [value]="filter" ></ap-search> <!-- Custom event com o nome "onTyping" que irá se comunicar com o component "ap-search" -->
+
+<ap-photos [photos]="photos | filterByDescription: filter" ></ap-photos>
+<ap-load-button 
+(click)="load()"
+[hasMore]="hasMore"></ap-load-button>
