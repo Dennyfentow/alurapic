@@ -1,0 +1,8 @@
+.break-word {
+    word-break: break-all
+}
+
+.comment-list {
+    height: 50vh;
+    overflow-y: auto;
+}
