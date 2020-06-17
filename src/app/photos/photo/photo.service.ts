@@ -7,7 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const API = environment.Apiurl;
+const API = environment.ApiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class PhotoService {

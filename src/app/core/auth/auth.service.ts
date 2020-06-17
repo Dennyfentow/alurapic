@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 import { UserService } from '../user/user.service';
 import { environment } from 'src/environments/environment';
 
-const API = environment.Apiurl;
+const API = environment.ApiUrl;
 
 @Injectable({
   providedIn: 'root'
