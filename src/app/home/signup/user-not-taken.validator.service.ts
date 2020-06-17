@@ -19,7 +19,7 @@ export class UserNotTakenValidatorService {
                     this.signUpService.checkUsernameTaken(username) // enquanto estou trabalhando aqui, não recebo mais nada até retornar algo
                 ))
                 .pipe(map(isTaken => isTaken ? {userNameTaken: true}: null )) // mapear para retornar null ou um objeto que é acessado no template
-                .pipe(tap(r => console.log(r)))
+                // .pipe(tap(r => console.log(r)))
                 .pipe(first()) // pega o primeiro valor e completa o subscribe
         }
     }

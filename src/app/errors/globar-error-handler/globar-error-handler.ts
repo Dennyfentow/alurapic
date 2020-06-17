@@ -32,14 +32,16 @@ export class GlobalErrorHandler implements ErrorHandler {
         StackTrace
             .fromError(error)
             .then(stackFrames => {
+
+                // console log errors
                 const stackAsString = stackFrames
                     .map(st => st.toString())
                     .join('\n');
-
                 console.log(message);
                 console.log(stackAsString);
-                console.log('o que será enviado para o servidor: ')
-                serverLogService.log({ // Enviar para o backEnd
+
+                // Submit to server log
+                serverLogService.log({
                     message,
                     url,
                     userName: userService.getUserName(),
@@ -48,7 +50,6 @@ export class GlobalErrorHandler implements ErrorHandler {
                     () => console.log('Error logged on server'),
                     err => console.log('Fail to send error log to server')
                 )
-
             });
     }
 }
