@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { RequestInterceptor } from './auth/request.interceptor';
 import { FooterComponent } from './footer/footer.component';
 import { AlertModule } from '../shared/components/alert/alert.module';
+import { LoadingModule } from '../shared/components/loading/loading.module';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { AlertModule } from '../shared/components/alert/alert.module';
     imports: [
         CommonModule,
         RouterModule,
-        AlertModule
+        AlertModule,
+        LoadingModule
     ],
     providers: [
         {
