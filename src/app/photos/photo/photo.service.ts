@@ -34,7 +34,13 @@ export class PhotoService {
         formData.append('allowComments', allowComments ? 'true' : 'false');
         formData.append('imageFile', file);
 
-        return this.http.post(API + '/photos/upload', formData);
+        return this.http.post(
+            API + '/photos/upload',
+            formData,
+            {
+                observe: 'events', // eventos
+                reportProgress: true // progresso
+            });
     }
 
     findById(id: number) {
@@ -59,11 +65,11 @@ export class PhotoService {
 
     like(photoId: number) {
         return this.http.post(
-            API + '/photos/' + photoId + '/like', {}, {observe: 'response'}
+            API + '/photos/' + photoId + '/like', {}, { observe: 'response' }
         ).pipe(map(res => true))
-        .pipe(catchError(err => {
-            return err.status == '304' ? of(false) : throwError(err);
-        }));
+            .pipe(catchError(err => {
+                return err.status == '304' ? of(false) : throwError(err);
+            }));
     }
 
 }

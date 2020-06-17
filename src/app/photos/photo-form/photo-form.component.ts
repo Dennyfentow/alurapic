@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PhotoService } from '../photo/photo.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
+
+import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
+import { PhotoService } from '../photo/photo.service';
 import { AlertService } from 'src/app/shared/components/alert/alert.service';
 import { UserService } from 'src/app/core/user/user.service';
 
@@ -15,6 +18,7 @@ export class PhotoFormComponent implements OnInit {
   photoForm: FormGroup;
   file: File;
   preview: string;
+  percentDone = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,11 +38,27 @@ export class PhotoFormComponent implements OnInit {
   upload() {
     const description = this.photoForm.get('description').value;
     const allowComments = this.photoForm.get('allowComments').value;
-    this.photosService.upload(description,allowComments,this.file)
-      .subscribe(() => {
-        this.alertService.success('Upload Complete', true);
+    this.photosService
+      .upload(description, allowComments, this.file)
+      .pipe(finalize(() => { // Finalize com isso 
         this.router.navigate(['/user', this.userService.getUserName()])
-      });
+
+      }))
+      .subscribe(
+        (event: HttpEvent<any>) => {
+          if (event.type == HttpEventType.UploadProgress) { // em progresso
+            this.percentDone = Math.round( (100 * event.loaded) / event.total); // calculo do percentual
+            console.log('calculo', this.percentDone);
+            console.log('loaded', event.loaded );
+            console.log('total', event.total);
+          } else if (event.type == HttpEventType.Response) { // Final
+            this.alertService.success('Upload Complete', true);
+          }
+        },
+        err => {
+          console.log(err);
+          this.alertService.danger('Upload error!', true);
+        });
   }
 
   handleFile(file: File) {
